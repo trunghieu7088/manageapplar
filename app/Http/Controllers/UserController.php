@@ -11,7 +11,7 @@ use Carbon\Carbon;
 
 class UserController extends Controller
 {
-    //
+    //draft code
     public function generateToken()
     {
         $user = User::where('email','bomeo@gmail.com')->first();
@@ -24,6 +24,7 @@ class UserController extends Controller
             'token_type' => 'Bearer',
         ];
     }
+    //end draft
 
     public function getUserInfo(Request $request)
     {
@@ -46,12 +47,6 @@ class UserController extends Controller
                 'return_data' => false, 
             ];
         }
-    }
-
-    public function testhash(Request $request)
-    {
-        $hashpass=Hash::make('Gcnet123456');
-        return view('test',['test'=>$hashpass]);
     }
 
     public function testcarbon(Request $request)
@@ -77,14 +72,7 @@ class UserController extends Controller
                       
             $request->session()->regenerate();
             $current_user = Auth::id();
-            $user = User::where('id',$current_user)->first();
-           // $tokenResult = $user->createToken('newauthToken')->plainTextToken;
-
-          /*  $return_data=array('status_code' => 200,
-            'access_token' => $tokenResult,
-            'token_type' => 'Bearer',
-            'userinfo'=>$user,
-            );*/             
+            $user = User::where('id',$current_user)->first();          
             return [
                 'success'=>true,
                 'status_code' => 200,
@@ -105,11 +93,7 @@ class UserController extends Controller
     }
 
     public function logout(Request $request)
-    {
-        //Auth::logout();
-
-       // $request()->user()->currentAccessToken()->delete();
-
+    {       
         Auth::guard('web')->logout();
 
     	$request->session()->invalidate();
@@ -119,7 +103,7 @@ class UserController extends Controller
          return [
             'success'=>true,
             'status_code' => 200,            
-            'message'=>'Login successfully'
+            'message'=>'logout successfully'
         ];          
     }
 }

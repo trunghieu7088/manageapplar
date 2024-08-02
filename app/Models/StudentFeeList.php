@@ -5,24 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Sanctum\HasApiTokens;
 use Carbon\Carbon;
 
 
 
-class Student extends Model
+
+class StudentFeeList extends Model
 {
     use HasFactory, HasApiTokens;
 
-    protected $appends = ['full_name_with_class','start_date_formatted'];
+    protected $table = 'student_fee_list';
 
-    protected function fullNameWithClass(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => $this->name . ' (' . $this->class . ')',
-        );
-    }
+    protected $appends = ['end_date_formatted','start_date_formatted'];
 
     protected function startDateFormatted(): Attribute
     {
@@ -32,8 +27,12 @@ class Student extends Model
         );
     }
 
-    public function studentFeeLists()
+    protected function endDateFormatted(): Attribute
     {
-        return $this->hasMany(StudentFeeList::class, 'id_student');
+
+        return Attribute::make(
+            get: fn () =>  Carbon::parse($this->end_date)->format('d - m - Y'),
+        );
     }
+
 }

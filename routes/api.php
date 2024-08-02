@@ -16,14 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('students', [StudentController::class, 'show']);
-
-Route::resource('students', StudentController::class);
-
-Route::get('/generatetoken', [UserController::class, 'generateToken']);
-
-Route::post('/authlogin', [UserController::class, 'authlogin']);
-
 /*
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -31,14 +23,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    Route::get('/testauth', [StudentController::class, 'testauth']);
-
     Route::post('/addstudent', [StudentController::class, 'addstudent']);
 
     Route::post('/logout', [UserController::class, 'logout']);    
+
+    Route::get('/getallstudent/{status_record}', [StudentController::class, 'get_all_student']);    
+
+    Route::get('/getstudent/{id}', [StudentController::class, 'get_student']);    
+
+    Route::put('/movestudent/{id}', [StudentController::class, 'move_student']);    
     
 });
 
+Route::post('/authlogin', [UserController::class, 'authlogin']);
+
 Route::get('/getuserinfo', [UserController::class, 'getUserInfo']);
 
-Route::get('/testcarbon', [UserController::class, 'testcarbon']);
