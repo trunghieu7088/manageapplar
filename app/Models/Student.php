@@ -32,8 +32,19 @@ class Student extends Model
         );
     }
 
-    public function studentFeeLists()
+    public function studentFeeLists(): HasMany
     {
         return $this->hasMany(StudentFeeList::class, 'id_student');
     }
+
+    protected static function booted(): void
+    {
+        static::updated(function (Student $student) {
+            if ($student->isDirty('month_fee')) {
+                // Update the fee_value in the related StudentFeeList records
+                $student->studentFeeLists()->where('state', 'debt')->update(['fee_value' => $student->month_fee]);
+            }
+        });
+    }
+    
 }

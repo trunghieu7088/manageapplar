@@ -32,6 +32,22 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/getstudent/{id}', [StudentController::class, 'get_student']);    
 
     Route::put('/movestudent/{id}', [StudentController::class, 'move_student']);    
+
+    Route::delete('/deletestudent/{id}', [StudentController::class, 'delete_student']);   
+
+    Route::put('/updatemonthfeestatus/{id}', [StudentController::class, 'update_month_fee_status']);  
+
+    Route::put('/updatemonthfee/{id}', [StudentController::class, 'update_month_fee']);  
+    
+    Route::post('/addmonth', [StudentController::class, 'add_month_action']);  
+    
+    Route::delete('/deletemonth/{id}', [StudentController::class, 'delete_month']);  
+
+    Route::put('/updatestudent/{id}', [StudentController::class, 'update_student']);  
+
+    Route::get('/getsummary', [StudentController::class, 'get_summary']);    
+
+    Route::get('/getreport', [StudentController::class, 'get_report']);
     
 });
 

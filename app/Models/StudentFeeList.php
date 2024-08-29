@@ -17,7 +17,7 @@ class StudentFeeList extends Model
 
     protected $table = 'student_fee_list';
 
-    protected $appends = ['end_date_formatted','start_date_formatted'];
+    protected $appends = ['end_date_formatted','start_date_formatted','need_pay'];
 
     protected function startDateFormatted(): Attribute
     {
@@ -34,5 +34,12 @@ class StudentFeeList extends Model
             get: fn () =>  Carbon::parse($this->end_date)->format('d - m - Y'),
         );
     }
+    protected function needPay(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->state === 'debt' && Carbon::parse($this->start_date)->isPast(),
+        );
+    }
+
 
 }
